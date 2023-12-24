@@ -3,7 +3,6 @@ import { DeleteProductService } from "@modules/products/services/DeleteProductSe
 import { ListProductService } from "@modules/products/services/ListProductService";
 import { ShowOneProductService } from "@modules/products/services/ShowOneProductService";
 import { UpdateProductService } from "@modules/products/services/UpdateProductService";
-import { Product } from "@modules/products/typeorm/entities/Product";
 import { AppError } from "@shared/errors/appError";
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 
@@ -14,7 +13,7 @@ export class ProductsController {
 		const product = await createProduct.execute(request.body)
 
 		if (!product) {
-			throw new Error("Something went wrong!")
+			throw new AppError("Something went wrong!")
 		}
 
 		return response.status(201).json(product)

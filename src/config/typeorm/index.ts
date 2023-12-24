@@ -1,7 +1,9 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { productsMigration } from './migrations'
-import { Product } from "@modules/products/typeorm/entities/Product"
+import { productsMigration, usersMigration } from './migrations'
+// import { Product } from "@modules/products/typeorm/entities/Product"
+import { Product } from "../../modules/products/typeorm/entities/Product"
+import { User } from "../../modules/users/typeorm/entities/User"
 
 export const appDataSource = new DataSource({
     type: "postgres",
@@ -12,8 +14,12 @@ export const appDataSource = new DataSource({
     database: "sellingapi",
     // synchronize: true,
     // logging: false,
-    entities: [Product],
+    entities: [
+			Product,
+			User
+		],
     migrations: [
-			productsMigration
+			productsMigration,
+			usersMigration
 		]
 })
