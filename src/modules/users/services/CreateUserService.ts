@@ -1,6 +1,7 @@
 import { AppError } from '@shared/errors/appError'
 import { User } from '../typeorm/entities/User'
 import { UsersRepository } from '../typeorm/repositories/usersRepository'
+import bcrypt from 'bcryptjs'
 
 type IRequest = {
 	id: string
@@ -12,7 +13,7 @@ type IRequest = {
 }
 
 export class CreateUserService {
-	async execute({ id, name, age, email, password, avatar }: IRequest): Promise<User | null> {
+	async execute({ id, name, age, email, password, avatar }: IRequest): Promise<User | null | AppError> {
 
 		const usersRepository = new UsersRepository()
 		const userWithProvidedEmail = await usersRepository.findByEmail(email)
@@ -21,11 +22,13 @@ export class CreateUserService {
 			throw new AppError("Email already in use!")
 		}
 
+		const hashedPassword = await bcrypt.hash(password, 8)
+
 		const user = usersRepository.create({
 			id,
 			name,
 			email,
-			password,
+			password: hashedPassword,
 			age,
 			avatar
 		})

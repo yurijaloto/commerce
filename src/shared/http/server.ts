@@ -1,9 +1,10 @@
 import express, {Request, Response, NextFunction} from 'express'
+import "express-async-errors" //precisa estar logo abaixo do express.
+//essa lib é quem lida com tratamento de erros assincronos, o que faz com que o middleware de erro possa funcionar
 import cors from 'cors'
 import { router } from './routes'
 import { AppError } from '@shared/errors/appError'
 import { appDataSource } from '@config/typeorm'
-import "express-async-errors"
 
 const app = express()
 
@@ -16,13 +17,13 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 	if (error instanceof AppError) {
 		return response.status(error.statusCode).json({
 			message: error.message,
-			status: error.statusCode
+			status: 'error'
 		})
 	}
 
 	return response.status(500).json({
 		message: 'Internal server Error',
-		status: 500
+		status: 'error'
 	})
 })
 

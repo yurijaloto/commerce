@@ -4,7 +4,7 @@ import { ListUsersService } from '../services/ListUsersService'
 import { AppError } from '@shared/errors/appError'
 
 export class UserController {
-	public async createUser(request: Request, response: Response, next: NextFunction): Promise<Response> {
+	public async createUser(request: Request, response: Response): Promise<Response> {
 
 		const createUserService = new CreateUserService()
 
@@ -21,6 +21,7 @@ export class UserController {
 		}
 
 		return response.status(201).json(user)
+
 	}
 
 	public async listUsers(request: Request, response: Response, next: NextFunction): Promise<Response> {
