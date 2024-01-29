@@ -31,6 +31,14 @@ export class ProductsRepository {
 		return await this.productsRepository.find()
 	}
 
+	public async findById(id: string): Promise<Product | null> {
+		return await this.productsRepository.findOne({
+			where: {
+				id
+			}
+		})
+	}
+
 	public async findOne(id: any): Promise<Product | null> {
 		return await this.productsRepository.findOne({
 			where: {

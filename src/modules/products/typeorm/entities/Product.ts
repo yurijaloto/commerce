@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
 import "reflect-metadata"
+import { OrdersProducts } from '../../../../modules/orders/typeorm/entity/OrdersProducts'
 
 @Entity('products')
 export class Product {
@@ -14,6 +15,9 @@ export class Product {
 
 	@Column('int')
 	quantity: number
+
+	@OneToMany(() => OrdersProducts, (ordersProducts) => ordersProducts.product)
+	order_products: OrdersProducts[]
 
 	@CreateDateColumn()
 	created_at: Date

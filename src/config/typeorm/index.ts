@@ -1,9 +1,13 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { productsMigration, usersMigration } from './migrations'
-// import { Product } from "@modules/products/typeorm/entities/Product"
+//TODO: improve imported files
+import { productsMigration, usersMigration, customersMigration, ordersMigration, addCustomerIdToOrders, ordersProductsMigration,addOrderIdToOrdersProducts, addProductIdToOrdersProducts } from './migrations'
+
 import { Product } from "../../modules/products/typeorm/entities/Product"
 import { User } from "../../modules/users/typeorm/entities/User"
+import { Customer } from "../../modules/customers/typeorm/entities/Customer"
+import { Order } from "../../modules/orders/typeorm/entity/Order"
+import { OrdersProducts } from "../../modules/orders/typeorm/entity/OrdersProducts"
 
 export const appDataSource = new DataSource({
     type: "postgres",
@@ -16,10 +20,19 @@ export const appDataSource = new DataSource({
     // logging: false,
     entities: [
 			Product,
-			User
+			User,
+			Customer,
+			Order,
+			OrdersProducts
 		],
     migrations: [
 			productsMigration,
-			usersMigration
+			usersMigration,
+			customersMigration,
+			ordersMigration,
+			addCustomerIdToOrders,
+			ordersProductsMigration,
+			addOrderIdToOrdersProducts,
+			addProductIdToOrdersProducts
 		]
 })
