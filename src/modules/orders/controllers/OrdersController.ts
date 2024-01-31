@@ -18,7 +18,7 @@ export class OrdersController {
 		const { customer_id, products } = request.body
 
 		const createOrderService = new CreateOrderService()
-		const createdOrder = createOrderService.execute({customer_id, products})
+		const createdOrder = await createOrderService.execute({customer_id, products})
 
 		return response.status(201).json(createdOrder)
 	}

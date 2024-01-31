@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
-import { User } from '../typeorm/entities/User'
+import { User } from '../entities/User'
 import { AppError } from '@shared/errors/appError'
 
 interface AuthUserResponse {
@@ -20,7 +20,7 @@ export function isAuthenticathed(request: Request, response: Response, next: Nex
 			throw new AppError("Token not provided", 401)
 		}
 
-		const user = jwt.verify(token, 'secret_key') as AuthUserResponse
+		const user = jwt.verify(token, process.env.SECRET_KEY || '') as AuthUserResponse
 
 		if (!user) {
 			throw new AppError("User not authenticated", 401)

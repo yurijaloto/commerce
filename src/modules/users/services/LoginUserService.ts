@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { User } from '../typeorm/entities/User'
-import { UsersRepository } from '../typeorm/repositories/usersRepository'
+import { User } from '../entities/User'
+import { UsersRepository } from '../repositories/usersRepository'
 import { AppError } from '@shared/errors/appError'
 
 type IRequest = {
@@ -38,7 +38,7 @@ export class LoginUserService {
 				id: user.id,
 				name: user.name
 			},
-			'secret_key',
+			process.env.SECRET_KEY || '',
 			{ expiresIn: '1d'
 		})
 

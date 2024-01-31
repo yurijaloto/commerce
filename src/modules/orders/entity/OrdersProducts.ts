@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
 import "reflect-metadata"
-import { Product } from '../../../../modules/products/typeorm/entities/Product'
+import { Product } from '../../products/entities/Product'
 import { Order } from './Order'
 
 @Entity('orders_products')

@@ -1,6 +1,6 @@
 import { appDataSource } from "@config/typeorm"
 import { Order } from "../entity/Order"
-import { Customer } from "../../../customers/typeorm/entities/Customer"
+import { Customer } from "../../customers/typeorm/entities/Customer"
 
 type IProduct = {
 	product_id: string,

@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config({ override: true })
 import express, {Request, Response, NextFunction} from 'express'
 import "express-async-errors" //precisa estar logo abaixo do express.
 //essa lib é quem lida com tratamento de erros assincronos, o que faz com que o middleware de erro possa funcionar
@@ -30,7 +32,7 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 appDataSource.initialize()
     .then(() => {
         // here you can start to work with your database
-				app.listen(3000, () => console.log(`app process ${process.pid} running on port 3000`))
+				app.listen(3000, () => console.log(`app process ${process.pid} running on port ${process.env.PORT}`))
     })
     .catch((error) => console.log(error))
 

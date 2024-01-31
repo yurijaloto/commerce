@@ -1,7 +1,7 @@
-import { ProductsRepository } from "@modules/products/typeorm/repositories/productsRepository"
+import { ProductsRepository } from "@modules/products/repositories/productsRepository"
 import { AppError } from "@shared/errors/appError"
 import { CustomersRepository } from "@modules/customers/typeorm/repositories/CustomerRepository"
-import { Product } from "../../products/typeorm/entities/Product"
+import { Product } from "../../products/entities/Product"
 
 interface IProduct {
 	product_id: string,
