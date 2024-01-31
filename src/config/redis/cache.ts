@@ -10,7 +10,7 @@ interface ICacheConfig {
 export const redisConfig: ICacheConfig = {
 	config: {
 		redis: {
-			host: process.env.REDIS_HOST,
+			host: process.env.redis_host,
 			port: Number(process.env.REDIS_PORT),
 			password: process.env.REDIS_PASS || undefined
 		},
