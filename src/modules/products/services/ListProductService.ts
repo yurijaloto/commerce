@@ -1,5 +1,5 @@
-import { Product } from "../entities/Product";
-import { ProductsRepository } from "../repositories/productsRepository";
+import { Product } from "../infra/typeorm/entities/Product";
+import { ProductsRepository } from "../infra/typeorm/repositories/productsRepository";
 
 export class ListProductService {
 	public async execute(): Promise<Product[] | null> {

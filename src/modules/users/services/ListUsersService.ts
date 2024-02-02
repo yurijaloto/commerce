@@ -1,5 +1,5 @@
-import { UsersRepository } from "../repositories/usersRepository";
-import { User } from "../entities/User";
+import { UsersRepository } from "../infra/typeorm/repositories/usersRepository";
+import { User } from "../infra/typeorm/entities/User";
 
 export class ListUsersService {
 	private usersRepository = new UsersRepository()

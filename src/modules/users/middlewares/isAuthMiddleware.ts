@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
-import { User } from '../entities/User'
+import { User } from '../infra/typeorm/entities/User'
 import { AppError } from '@shared/errors/appError'
 
 interface AuthUserResponse {

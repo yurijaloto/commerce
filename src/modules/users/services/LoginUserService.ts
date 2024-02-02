@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { User } from '../entities/User'
-import { UsersRepository } from '../repositories/usersRepository'
+import { User } from '../infra/typeorm/entities/User'
+import { UsersRepository } from '../infra/typeorm/repositories/usersRepository'
 import { AppError } from '@shared/errors/appError'
 
 type IRequest = {

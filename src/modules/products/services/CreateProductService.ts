@@ -1,6 +1,6 @@
 import { AppError } from '@shared/errors/appError'
-import { Product } from '../entities/Product'
-import { ProductsRepository } from '../repositories/productsRepository'
+import { Product } from '../infra/typeorm/entities/Product'
+import { ProductsRepository } from '../infra/typeorm/repositories/productsRepository'
 
 type IRequest = {
 	name: string,

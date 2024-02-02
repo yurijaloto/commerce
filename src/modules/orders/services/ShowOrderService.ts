@@ -1,6 +1,6 @@
 import { AppError } from "@shared/errors/appError";
-import { OrdersRepository } from "../repositories/orderRepository";
-import { Order } from "../entity/Order";
+import { OrdersRepository } from "../infra/typeorm/repositories/orderRepository";
+import { Order } from "../infra/typeorm/entity/Order";
 
 interface IRequest {
 	id: string
