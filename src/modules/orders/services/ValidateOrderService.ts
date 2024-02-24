@@ -2,6 +2,8 @@ import { ProductsRepository } from "../../../modules/products/infra/typeorm/repo
 import { AppError } from "@shared/errors/appError"
 import { CustomersRepository } from "../../../modules/customers/infra/typeorm/repositories/CustomerRepository"
 import { Product } from "../../products/infra/typeorm/entities/Product"
+import { ICustomerRepository } from "./../../customers/domain/repositories/ICustomerRepository"
+import { IProductsRepository } from "./../../products/domain/repositories/IproductsRepository"
 
 interface IProduct {
 	product_id: string,
@@ -22,12 +24,19 @@ interface IResponse {
 
 export class ValidateOrderService {
 
+	constructor(
+		private customersRepository: ICustomerRepository,
+		private productsRepository: IProductsRepository
+	){
+
+	}
+
 	public async execute({customer_id, products}: IRequest): Promise<IResponse | AppError> {
 
-		const customersRepository = new CustomersRepository
-		const productsRepository = new ProductsRepository()
+		// const customersRepository = new CustomersRepository()
+		// const productsRepository = new ProductsRepository()
 
-		const customer = await customersRepository.findById(customer_id)
+		const customer = await this.customersRepository.findById(customer_id)
 		if (!customer) {
 			throw new AppError("Customer doesn't exists!")
 		}
@@ -37,7 +46,7 @@ export class ValidateOrderService {
 		const filteredProducs = []
 
 		for (const product of products) {
-			const individualProduct = await productsRepository.findById(product.product_id)
+			const individualProduct = await this.productsRepository.findById(product.product_id)
 
 			if (!individualProduct) {
 				doesntExists.push(product)

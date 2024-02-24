@@ -3,6 +3,9 @@ import { Order } from "../infra/typeorm/entity/Order"
 import { OrdersRepository } from "../infra/typeorm/repositories/orderRepository"
 import { AppError } from "@shared/errors/appError"
 import { CustomersRepository } from "../../../modules/customers/infra/typeorm/repositories/CustomerRepository"
+import { IOrdersRepository } from "../domain/repositories/IOrdersRepository"
+import { ICustomerRepository } from "./../../customers/domain/repositories/ICustomerRepository"
+import { IProductsRepository } from "./../../products/domain/repositories/IproductsRepository"
 
 interface IProduct {
 	id: string,
@@ -27,15 +30,22 @@ interface IOrderCreate {
 
 export class CreateOrderService {
 
+	constructor(
+		private ordersRepository: IOrdersRepository,
+		private customersRepository: ICustomerRepository,
+		private productsRepository: IProductsRepository
+		) {
+	}
+
 	public async execute({customer_id, products}: IRequest): Promise<Order | null | AppError> {
 
-		const ordersRepository = new OrdersRepository()
-		const customersRepository = new CustomersRepository
-		const productsRepository = new ProductsRepository()
+		// const ordersRepository = new OrdersRepository()
+		// const customersRepository = new CustomersRepository
+		// const productsRepository = new ProductsRepository()
 
 		//TODO: create with transaction
 
-		const customer = await customersRepository.findById(customer_id)
+		const customer = await this.customersRepository.findById(customer_id)
 		if (!customer) {
 			throw new AppError("Customer doesn't exists!")
 		}
@@ -43,7 +53,7 @@ export class CreateOrderService {
 		const filteredProducsToSaveOrder: IOrderProducts[] = []
 
 		for (const product of products) {
-			const individualProduct = await productsRepository.findById(product.id)
+			const individualProduct = await this.productsRepository.findById(product.id)
 
 			if (!individualProduct) {
 				throw new AppError("Product doesn't exists!")
@@ -54,7 +64,7 @@ export class CreateOrderService {
 			}
 
 			individualProduct.quantity -= product.quantity
-			await productsRepository.save(individualProduct)
+			await this.productsRepository.save(individualProduct)
 
 			filteredProducsToSaveOrder.push({
 				product_id: individualProduct.id,
@@ -64,7 +74,7 @@ export class CreateOrderService {
 			})
 		}
 
-		const order = await ordersRepository.createOrder({
+		const order = await this.ordersRepository.createOrder({
 			customer,
 			products: filteredProducsToSaveOrder
 		})
