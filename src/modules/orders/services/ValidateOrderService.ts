@@ -3,7 +3,8 @@ import { AppError } from "@shared/errors/appError"
 import { CustomersRepository } from "../../../modules/customers/infra/typeorm/repositories/CustomerRepository"
 import { Product } from "../../products/infra/typeorm/entities/Product"
 import { ICustomerRepository } from "./../../customers/domain/repositories/ICustomerRepository"
-import { IProductsRepository } from "./../../products/domain/repositories/IproductsRepository"
+import { IProductsRepository } from "./../../products/domain/repositories/IProductsRepository"
+import { injectable, inject } from "tsyringe"
 
 interface IProduct {
 	product_id: string,
@@ -21,11 +22,13 @@ interface IResponse {
 	notEnoughOnStock: Array<Product>
 	filteredProducs: Array<Product>
 }
-
+@injectable()
 export class ValidateOrderService {
 
 	constructor(
+		@inject('customerRepositoryKey')
 		private customersRepository: ICustomerRepository,
+		@inject('productsRepositoryKey')
 		private productsRepository: IProductsRepository
 	){
 

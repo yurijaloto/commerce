@@ -1,7 +1,7 @@
 import { appDataSource } from "@config/infra/typeorm"
 import { Product } from "../entities/Product"
 import { IRequest } from "./../../../../products/domain/models/IRequest"
-import { IProductsRepository } from "./../../../../products/domain/repositories/IproductsRepository"
+import { IProductsRepository } from "./../../../domain/repositories/IProductsRepository"
 
 export class ProductsRepository implements IProductsRepository {
 

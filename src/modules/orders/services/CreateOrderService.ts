@@ -5,7 +5,8 @@ import { AppError } from "@shared/errors/appError"
 import { CustomersRepository } from "../../../modules/customers/infra/typeorm/repositories/CustomerRepository"
 import { IOrdersRepository } from "../domain/repositories/IOrdersRepository"
 import { ICustomerRepository } from "./../../customers/domain/repositories/ICustomerRepository"
-import { IProductsRepository } from "./../../products/domain/repositories/IproductsRepository"
+import { IProductsRepository } from "./../../products/domain/repositories/IProductsRepository"
+import { injectable, inject } from "tsyringe"
 
 interface IProduct {
 	id: string,
@@ -28,11 +29,15 @@ interface IOrderCreate {
 	products: IOrderProducts[]
 }
 
+@injectable()
 export class CreateOrderService {
 
 	constructor(
+		@inject('ordersRepositoryKey')
 		private ordersRepository: IOrdersRepository,
+		@inject('customersRepositoryKey')
 		private customersRepository: ICustomerRepository,
+		@inject('productsRepositoryKey')
 		private productsRepository: IProductsRepository
 		) {
 	}
