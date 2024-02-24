@@ -2,9 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import "reflect-metadata"
 import { Product } from '../../../../products/infra/typeorm/entities/Product'
 import { Order } from './Order'
+import { IOrdersProducts } from "./../../../domain/models/IOrdersProducts"
 
 @Entity('orders_products')
-export class OrdersProducts {
+export class OrdersProducts implements IOrdersProducts {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 

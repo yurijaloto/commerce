@@ -1,19 +1,9 @@
 import { appDataSource } from "@config/infra/typeorm"
 import { Order } from "../entity/Order"
-import { Customer } from "../../../../customers/infra/typeorm/entities/Customer"
+import { IOrdersRepository } from "./../../../../orders/domain/repositories/IOrdersRepository"
+import { ICreateOrder } from "./../../../domain/models/ICreateOrder"
 
-type IProduct = {
-	product_id: string,
-	price: number,
-	quantity: number
-}
-
-type IRequest = {
-	customer: Customer,
-	products: IProduct[]
-}
-
-export class OrdersRepository {
+export class OrdersRepository implements IOrdersRepository {
 
 	private ordersRepository = appDataSource.getRepository(Order)
 
@@ -25,8 +15,7 @@ export class OrdersRepository {
 		})
 	}
 
-
-	public async createOrder({ customer, products }: IRequest): Promise<Order | null> {
+	public async createOrder({ customer, products }: ICreateOrder): Promise<Order | null> {
 		const order = this.ordersRepository.create({
 			customer,
 			order_products: products

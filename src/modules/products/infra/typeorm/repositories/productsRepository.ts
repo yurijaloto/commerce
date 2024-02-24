@@ -1,13 +1,9 @@
 import { appDataSource } from "@config/infra/typeorm"
 import { Product } from "../entities/Product"
+import { IRequest } from "./../../../../products/domain/models/IRequest"
+import { IProductsRepository } from "./../../../../products/domain/repositories/IproductsRepository"
 
-type IRequest = {
-	name: string,
-	price: number,
-	quantity: number
-}
-
-export class ProductsRepository {
+export class ProductsRepository implements IProductsRepository {
 
 	private productsRepository = appDataSource.getRepository(Product)
 
@@ -39,30 +35,16 @@ export class ProductsRepository {
 		})
 	}
 
-	public async findOne(id: any): Promise<Product | null> {
-		return await this.productsRepository.findOne({
-			where: {
-				id: id
-			}
-		})
-	}
+	// public async findOne(id: any): Promise<Product | null> {
+	// 	return await this.productsRepository.findOne({
+	// 		where: {
+	// 			id: id
+	// 		}
+	// 	})
+	// }
 
 	public async remove(products: Product[]): Promise<Product[]> {
 		return await this.productsRepository.remove(products)
 	}
 
-	// public async update(options: any): Promise<Product | null> {
-	// 	return await this.productsRepository.update(options.id, )
-	// }
-
 }
-
-// export const productsRepository = appDataSource.getRepository(Product)
-
-// export async function findByName(name: string): Promise<Product | null> {
-// 	return await productsRepository.findOne({
-// 		where: {
-// 			name: name
-// 		}
-// 	})
-// }

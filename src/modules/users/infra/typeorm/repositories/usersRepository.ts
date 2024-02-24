@@ -1,16 +1,9 @@
 import { appDataSource } from "@config/infra/typeorm"
 import { User } from "../entities/User"
+import { IUSerRepository } from "./../../../../users/domain/repositories/IUserRepository"
+import { IRequest } from "./../../../../users/domain/models/IRequest"
 
-type IRequest = {
-	id: string
-	name: string,
-	email: string,
-	password: string,
-	age?: number,
-	avatar?: string
-}
-
-export class UsersRepository {
+export class UsersRepository implements IUSerRepository{
 
 	private usersRepository = appDataSource.getRepository(User)
 
@@ -22,7 +15,7 @@ export class UsersRepository {
 		})
 	}
 
-	public async findByName({ name }: IRequest): Promise<User | null> {
+	public async findByName(name: string): Promise<User | null> {
 		return await this.usersRepository.findOne({
 			where: {
 				name,
@@ -43,7 +36,7 @@ export class UsersRepository {
 		return await this.usersRepository.find()
 	}
 
-	public async findById({ id }: IRequest): Promise<User | null> {
+	public async findById(id: string): Promise<User | null> {
 		return await this.usersRepository.findOne({
 			where: {
 				id: id

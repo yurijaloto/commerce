@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
 import "reflect-metadata"
 import { OrdersProducts } from '../../../../orders/infra/typeorm/entity/OrdersProducts'
+import { IProduct } from './../../../../products/domain/models/IProduct'
 
 @Entity('products')
-export class Product {
+export class Product implements IProduct {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 

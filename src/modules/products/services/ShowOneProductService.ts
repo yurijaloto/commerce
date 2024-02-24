@@ -12,7 +12,7 @@ export class ShowOneProductService {
 	public async execute(id: string): Promise<Product> {
 		// let products: Array<Product> = []
 		const productsRepository = new ProductsRepository()
-		const product =  await productsRepository.findOne(id)
+		const product =  await productsRepository.findById(id)
 
 		if (!product) {
 			throw new AppError("Product not found")

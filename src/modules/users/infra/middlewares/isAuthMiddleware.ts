@@ -1,15 +1,13 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
-import { User } from '../infra/typeorm/entities/User'
+import { User } from '../typeorm/entities/User'
 import { AppError } from '@shared/errors/appError'
 
 interface AuthUserResponse {
-
 		id: string,
 		name: string,
 		iat: number,
 		exp: number
-
 }
 
 export function isAuthenticathed(request: Request, response: Response, next: NextFunction): void {

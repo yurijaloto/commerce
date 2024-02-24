@@ -2,15 +2,7 @@ import { AppError } from '@shared/errors/appError'
 import { User } from '../infra/typeorm/entities/User'
 import { UsersRepository } from '../infra/typeorm/repositories/usersRepository'
 import bcrypt from 'bcryptjs'
-
-type IRequest = {
-	id: string
-	name: string,
-	email: string,
-	password: string,
-	age: number,
-	avatar: string
-}
+import { IRequest } from '../domain/models/IRequest'
 
 export class CreateUserService {
 	async execute({ id, name, age, email, password, avatar }: IRequest): Promise<User | null | AppError> {

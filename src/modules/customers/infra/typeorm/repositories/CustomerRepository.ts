@@ -1,15 +1,16 @@
 import { appDataSource } from "@config/infra/typeorm"
 import { Customer } from "../entities/Customer"
+import { ICustomerRepository } from "./../../../../customers/domain/repositories/ICustomerRepository"
+import { Repository } from "typeorm"
+import { ICreateCustomer } from "./../../../../customers/domain/models/ICreateCustomer"
 
-type IRequest = {
-	id: string
-	name: string,
-	email: string
-}
+export class CustomersRepository implements ICustomerRepository {
 
-export class CustomersRepository {
+	private customersRepository: Repository<Customer>;
 
-	private customersRepository = appDataSource.getRepository(Customer)
+	constructor() {
+		this.customersRepository = appDataSource.getRepository(Customer);
+	}
 
 	public async findByEmail(email: string): Promise<Customer | null> {
 		return await this.customersRepository.findOne({
@@ -19,7 +20,7 @@ export class CustomersRepository {
 		})
 	}
 
-	public async findByName({ name }: IRequest): Promise<Customer | null> {
+	public async findByName(name: string): Promise<Customer | null> {
 		return await this.customersRepository.findOne({
 			where: {
 				name,
@@ -28,7 +29,7 @@ export class CustomersRepository {
 		})
 	}
 
-	public async createCustomer({name, email}: IRequest): Promise<Customer | null> {
+	public async createCustomer({name, email}: ICreateCustomer): Promise<Customer | null> {
 		const customer = this.customersRepository.create({
 			name,
 			email
@@ -54,19 +55,4 @@ export class CustomersRepository {
 	public async remove(customers: Customer[]): Promise<Customer[]> {
 		return await this.customersRepository.remove(customers)
 	}
-
-	// public async update(options: any): Promise<Product | null> {
-	// 	return await this.productsRepository.update(options.id, )
-	// }
-
 }
-
-// export const productsRepository = appDataSource.getRepository(Product)
-
-// export async function findByName(name: string): Promise<Product | null> {
-// 	return await productsRepository.findOne({
-// 		where: {
-// 			name: name
-// 		}
-// 	})
-// }

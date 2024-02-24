@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import "reflect-metadata"
+import { IUser } from './../../../../users/domain/models/IUser'
 
 @Entity('users')
-export class User {
+export class User implements IUser {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 

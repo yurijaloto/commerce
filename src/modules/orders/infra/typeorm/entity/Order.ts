@@ -3,9 +3,10 @@ import "reflect-metadata"
 import { Customer } from '../../../../customers/infra/typeorm/entities/Customer'
 import { Product } from '../../../../products/infra/typeorm/entities/Product'
 import { OrdersProducts } from './OrdersProducts'
+import { IOrder } from './../../../../orders/domain/models/IOrder'
 
 @Entity('orders')
-export class Order {
+export class Order implements IOrder {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
